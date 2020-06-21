@@ -20,7 +20,7 @@ public class WindowContent extends JPanel {
 	
 	//set this panel's preferred size for auto-sizing the container JFrame
 	public Dimension getPreferredSize() {
-		return new Dimension(_UI_Constants.Window_Width, _UI_Constants.Window_Height);
+		return new Dimension(_UI_Constants.Window_Width - 200, _UI_Constants.Window_Height);
 	}
 	
 	//drawing operations should be done in this method

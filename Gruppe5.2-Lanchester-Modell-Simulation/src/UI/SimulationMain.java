@@ -2,8 +2,7 @@ package UI;
 
 import java.util.Timer;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import UI._UI_Constants;
 import utils.ApplicationTime;
@@ -25,10 +24,35 @@ public class SimulationMain {
 	private static void CreateFrame(ApplicationTime thread) {
 		
 		//Create a new frame
-		frame = new JFrame("Mathematik und Simulation");
+		frame = new JFrame("Simulation Lanchester Modell");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Add a JPanel as the new drawing surface
+		JPanel Menu = new JPanel();
+		JLabel gLabel = new JLabel("G:");
+		JTextField g = new JTextField(1);
+		Menu.add(gLabel);
+		Menu.add(g);
+		
+		JLabel hLabel = new JLabel("H:");
+		JTextField h = new JTextField(1);
+		Menu.add(hLabel);
+		Menu.add(h);
+		
+		JLabel sLabel = new JLabel("s:");
+		JTextField s = new JTextField(1);
+		Menu.add(sLabel);
+		Menu.add(s);
+		
+		JLabel rLabel = new JLabel("r:");
+		JTextField r = new JTextField(1);
+		Menu.add(rLabel);
+		Menu.add(r);
+		
+		JButton button = new JButton("Starte Simulation");
+		Menu.add(button);
+		
+		frame.add(Menu);
 		JPanel panel = new WindowContent(thread);
 		frame.add(panel);
 		frame.pack(); //adjusts size of the JFrame to fit the size of it's components
