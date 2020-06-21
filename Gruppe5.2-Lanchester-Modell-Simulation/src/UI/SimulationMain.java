@@ -30,32 +30,52 @@ public class SimulationMain {
 		//Add a JPanel as the new drawing surface
 		JPanel Menu = new JPanel();
 		JLabel gLabel = new JLabel("G:");
-		JTextField g = new JTextField(1);
+		JTextField g_input = new JTextField("1",10);
 		Menu.add(gLabel);
-		Menu.add(g);
+		Menu.add(g_input);
 		
 		JLabel hLabel = new JLabel("H:");
-		JTextField h = new JTextField(1);
+		JTextField h_input = new JTextField("1",10);
 		Menu.add(hLabel);
-		Menu.add(h);
+		Menu.add(h_input);
 		
 		JLabel sLabel = new JLabel("s:");
-		JTextField s = new JTextField(1);
+		JTextField s_input = new JTextField("1",10);
 		Menu.add(sLabel);
-		Menu.add(s);
+		Menu.add(s_input);
 		
 		JLabel rLabel = new JLabel("r:");
-		JTextField r = new JTextField(1);
+		JTextField r_input = new JTextField("1",10);
 		Menu.add(rLabel);
-		Menu.add(r);
+		Menu.add(r_input);
 		
 		JButton button = new JButton("Starte Simulation");
-		Menu.add(button);
 		
+		button.addActionListener(new java.awt.event.ActionListener() {
+			long g = Long.parseLong(g_input.getText());
+			long h = Long.parseLong(h_input.getText());
+			double s = Double.parseDouble(s_input.getText());
+			double r = Double.parseDouble(r_input.getText());
+			
+            // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+            	JPanel panel = new WindowContent(thread, g, h, s, r);
+            	frame.add(panel);
+            	
+        		ApplicationTime animThread = new ApplicationTime();
+        		animThread.start();
+
+        		CreateFrame(animThread);
+        		
+        		Timer timer = new Timer();
+        		timer.scheduleAtFixedRate(new FrameUpdate(frame), 100, _UI_Constants.TPF);
+            }
+        });
+		Menu.add(button);
+	
 		frame.add(Menu);
-		JPanel panel = new WindowContent(thread);
-		frame.add(panel);
-		frame.pack(); //adjusts size of the JFrame to fit the size of it's components
+		
+		frame.setSize(_UI_Constants.Window_Width,_UI_Constants.Window_Height);
 		frame.setVisible(true);
 	}
 }

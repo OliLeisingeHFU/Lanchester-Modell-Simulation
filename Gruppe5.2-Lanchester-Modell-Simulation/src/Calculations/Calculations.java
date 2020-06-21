@@ -9,7 +9,7 @@ public class Calculations {
 	public double zeroCrossing(long _g, long _h, double _r, double _s, double _l) {
 		
 		if (_l > 0 || (_l == 0 && _g > _h)) {
-			return Math.sqrt( (-_l)/_r );
+			return Math.sqrt( (_l)/_r );
 		}	else	{
 			return Math.sqrt( (-_l)/_s );
 		}
