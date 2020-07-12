@@ -16,11 +16,11 @@ public class Calculations {
 	}
 	
 	public static double gCurrent(long _g, long _h, double _r, double _s, double _t)	{
-		return (_g * ((Math.exp(Math.sqrt(_s*_r)*_t) + Math.exp(Math.sqrt(_s*_r)*_t))/2)) - ((Math.sqrt(_r/_s)*_h)*((Math.exp(Math.sqrt(_s*_r)*_t) - Math.exp(Math.sqrt(_s*_r)*_t))/2));
+		return (_g * ((Math.exp(Math.sqrt(_s*_r)*_t) + Math.exp( - (Math.sqrt(_s*_r)*_t)))/2)) - ((_r / (Math.sqrt(_r * _s))*_h)*((Math.exp(Math.sqrt(_s*_r)*_t) - Math.exp( - (Math.sqrt(_s*_r)*_t)))/2));
 	}
 	
 	public static double hCurrent(long _g, long _h, double _r, double _s, double _t)	{
-		return (_h * ((Math.exp(Math.sqrt(_s*_r)*_t) + Math.exp(Math.sqrt(_s*_r)*_t))/2)) - ((Math.sqrt(_r/_s)*_g)*((Math.exp(Math.sqrt(_s*_r)*_t) - Math.exp(Math.sqrt(_s*_r)*_t))/2));
+		return (_h * ((Math.exp(Math.sqrt(_s*_r)*_t) + Math.exp( - (Math.sqrt(_s*_r)*_t)))/2)) - ((_s / (Math.sqrt(_r * _s))*_g)*((Math.exp(Math.sqrt(_s*_r)*_t) - Math.exp( - (Math.sqrt(_s*_r)*_t)))/2));
 	}
 	
 	public static double remaining(long _g, long _h, double _r, double _s)	{

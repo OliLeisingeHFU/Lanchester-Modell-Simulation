@@ -11,6 +11,7 @@ import utils.FrameUpdate;
 public class SimulationMain {
 	private static JFrame frame;
 	private static JFrame menuframe;
+	private static JPanel panel;
 	
 	public static void main(String[] args) {
 		ApplicationTime animThread = new ApplicationTime();
@@ -20,11 +21,31 @@ public class SimulationMain {
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new FrameUpdate(frame), 100, _UI_Constants.TPF);
 	}
+	
+	public static void gWon(long remaining) {
+		frame.remove(panel);
+		JPanel Solution = new JPanel();
+		JLabel g = new JLabel("Team Rot hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig");
+		Solution.add(g);
+		frame.add(Solution);
+		frame.pack();
+		frame.setVisible(true);
+	}
+	
+	public static void hWon(long remaining) {
+		frame.remove(panel);
+		JPanel Solution = new JPanel();
+		JLabel g = new JLabel("Team Blau hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig");
+		Solution.add(g);
+		frame.add(Solution);
+		frame.pack();
+		frame.setVisible(true);
+	}
 
 	private static void CreateFrame(ApplicationTime thread) {
 		
 		//Create a new frame
-		menuframe = new JFrame("Simulation Lanchester Modell");
+		menuframe = new JFrame("Simulation Lanchester Modell Menu");
 		menuframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame = new JFrame("Simulation Lanchester Modell");
@@ -60,15 +81,15 @@ public class SimulationMain {
 		menuframe.setVisible(true);
 		
 		button.addActionListener(new java.awt.event.ActionListener() {
-			long g = Long.parseLong(g_input.getText());
-			long h = Long.parseLong(h_input.getText());
-			double s = Double.parseDouble(s_input.getText());
-			double r = Double.parseDouble(r_input.getText());
-			
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(java.awt.event.ActionEvent e) {
+            	long g = Long.parseLong(g_input.getText());
+    			long h = Long.parseLong(h_input.getText());
+    			double s = Double.parseDouble(s_input.getText());
+    			double r = Double.parseDouble(r_input.getText());
+    			
             	menuframe.setVisible(false);
-            	JPanel panel = new WindowContent(thread, g, h, s, r);
+            	panel = new WindowContent(thread, g, h, s, r);
             	frame.add(panel);
             	frame.pack();
             	frame.setVisible(true);

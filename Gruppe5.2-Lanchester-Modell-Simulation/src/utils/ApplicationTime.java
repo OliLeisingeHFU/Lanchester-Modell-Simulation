@@ -8,6 +8,7 @@ public class ApplicationTime extends Thread {
 	public long currentTime = 0;
 	public long formerTime = 0;
 	private double timeScale = _UI_Constants.TIMESCALE;
+	private volatile boolean running = true;
 	
 	public ApplicationTime() {
 	}
@@ -17,13 +18,17 @@ public class ApplicationTime extends Thread {
 		
 		formerTime = System.currentTimeMillis();
 		
-		while(true) {
+		while(running) {
 			
 			currentTime = System.currentTimeMillis();
 			timeSinceStart += (currentTime - formerTime) * timeScale;
 			formerTime = currentTime;
 		}
 	}
+	
+	public void stopThread(){
+        running = false;
+    }
 	
 	public double GetTime() {
 		return timeSinceStart;

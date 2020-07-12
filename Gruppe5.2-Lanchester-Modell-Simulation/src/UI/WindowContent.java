@@ -66,15 +66,15 @@ public class WindowContent extends JPanel {
 			long[] point = new long[2];
 			point[0] = (long)(Math.random() * 500 + 500);
 			point[1] = (long)(Math.random() * 500);
-			Team_Blue.add(point);		
+			Team_Blue.add(point);	
 		}
 	}
 	
 	public void updateTeams() {
-		for (long i = old_g; i > current_g; i-- ) {
+		for (long i = 0; i < old_g - current_g; i++ ) {
 			Team_Red.remove((int) i);
 		}
-		for(long j = old_h; j < current_h; j++ ) {	
+		for(long j = 0; j < old_h - current_h; j++ ) {	
 			Team_Blue.remove((int) j);
 		}
 	}
@@ -93,19 +93,31 @@ public class WindowContent extends JPanel {
 		old_h = current_h;
 		
 		current_g = (long) Calculations.gCurrent(g, h, r, s, time);
-		current_h = (long) Calculations.hCurrent(g, h, r, s, time);	
+		current_h = (long) Calculations.hCurrent(g, h, r, s, time);
+		
 		updateTeams();
 		
 		// draw teams
 		graph.setColor(Color.RED);
-		for (int i = 0; i < current_g; i++ ) {
+		for (int i = 0; i < current_g - 1; i++ ) {
 			graph.fillOval((int)(Team_Red.get(i))[0], (int)(Team_Red.get(i))[1], dia , dia);
 		}
 		graph.setColor(Color.BLUE);	
-		for (int j = 0; j < current_h; j++ ) {
+		for (int j = 0; j < current_h - 1; j++ ) {
+			System.out.println(current_h);
 			graph.fillOval((int)(Team_Blue.get(j))[0], (int)(Team_Blue.get(j))[1], dia , dia);
 		}
 		time = t.GetTimeInSeconds() / 10;
+		
+		if(current_g < 1) {
+			t.stopThread();
+			SimulationMain.hWon(current_h);
+			
+		}else if(current_h < 1) {
+			t.stopThread();
+			SimulationMain.gWon(current_g);
+			
+		}
 	}
 }
 
