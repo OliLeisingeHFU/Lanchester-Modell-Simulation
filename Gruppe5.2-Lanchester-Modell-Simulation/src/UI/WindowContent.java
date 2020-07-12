@@ -3,13 +3,19 @@ package UI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
 import javax.swing.JPanel;
 
+import java.util.ArrayList;
+
+import Calculations.Calculations;
 import utils.ApplicationTime;
 
 public class WindowContent extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6820769477359842449L;
 	//panel has a single time tracking thread associated with it
 	private ApplicationTime t;
 	private double time;
@@ -19,6 +25,16 @@ public class WindowContent extends JPanel {
 	public double s;
 	public double r;
 	
+	public long current_g;
+	public long current_h;
+	
+	public long old_g;
+	public long old_h;
+	
+	int dia = 10;
+	
+	public ArrayList<long[]> Team_Red = new ArrayList<long[]>();
+	public ArrayList<long[]> Team_Blue = new ArrayList<long[]>();
 	
 	public double y_axis_Stretch;
 	
@@ -33,6 +49,34 @@ public class WindowContent extends JPanel {
 		this.h = h_value;
 		this.s = s_value;
 		this.r = r_value;
+		
+		current_g = g;
+		current_h = h;
+		initializeTeams();
+	}
+	
+	public void initializeTeams() {
+		for (int i = 0; i < g; i++ ) {
+			long[] point = new long[2];
+			point[0] = (long)(Math.random() * 500);
+			point[1] = (long)(Math.random() * 500);
+			Team_Red.add(point);
+		}
+		for(int j = 0; j < h; j++ ) {
+			long[] point = new long[2];
+			point[0] = (long)(Math.random() * 500 + 500);
+			point[1] = (long)(Math.random() * 500);
+			Team_Blue.add(point);		
+		}
+	}
+	
+	public void updateTeams() {
+		for (long i = old_g; i > current_g; i-- ) {
+			Team_Red.remove((int) i);
+		}
+		for(long j = old_h; j < current_h; j++ ) {	
+			Team_Blue.remove((int) j);
+		}
 	}
 	
 	//set this panel's preferred size for auto-sizing the container JFrame
@@ -44,27 +88,24 @@ public class WindowContent extends JPanel {
 	@Override protected void paintComponent(Graphics graph) {
 		super.paintComponent(graph);
 		
-		// Dimensionen Berechnung
-		long start_g_x = 0;
-		long start_h_x = 0;
-		long start_g_y = 0;
-		long start_h_y = 0;
+
+		old_g = current_g;
+		old_h = current_h;
 		
-		if(g >= h) {
-			y_axis_Stretch = g / _UI_Constants.Window_Height;
-			start_g_y = 0;
-			start_h_y = Math.round((g - h) * y_axis_Stretch);
-			
-		}else {
-			y_axis_Stretch = h / _UI_Constants.Window_Height;
-			start_h_y = 0;
-			start_g_y = Math.round((h - g) * y_axis_Stretch);
+		current_g = (long) Calculations.gCurrent(g, h, r, s, time);
+		current_h = (long) Calculations.hCurrent(g, h, r, s, time);	
+		updateTeams();
+		
+		// draw teams
+		graph.setColor(Color.RED);
+		for (int i = 0; i < current_g; i++ ) {
+			graph.fillOval((int)(Team_Red.get(i))[0], (int)(Team_Red.get(i))[1], dia , dia);
 		}
-		
-		//y_axis_Stretch = () / _UI_Constants.Window_Width;
-		
-		time = t.GetTimeInSeconds();
-		 
+		graph.setColor(Color.BLUE);	
+		for (int j = 0; j < current_h; j++ ) {
+			graph.fillOval((int)(Team_Blue.get(j))[0], (int)(Team_Blue.get(j))[1], dia , dia);
+		}
+		time = t.GetTimeInSeconds() / 10;
 	}
 }
 

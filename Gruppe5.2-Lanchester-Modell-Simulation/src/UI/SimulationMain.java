@@ -10,11 +10,11 @@ import utils.FrameUpdate;
 
 public class SimulationMain {
 	private static JFrame frame;
+	private static JFrame menuframe;
 	
 	public static void main(String[] args) {
 		ApplicationTime animThread = new ApplicationTime();
 		animThread.start();
-
 		CreateFrame(animThread);
 		
 		Timer timer = new Timer();
@@ -24,9 +24,11 @@ public class SimulationMain {
 	private static void CreateFrame(ApplicationTime thread) {
 		
 		//Create a new frame
+		menuframe = new JFrame("Simulation Lanchester Modell");
+		menuframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		frame = new JFrame("Simulation Lanchester Modell");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		//Add a JPanel as the new drawing surface
 		JPanel Menu = new JPanel();
 		JLabel gLabel = new JLabel("G:");
@@ -51,6 +53,12 @@ public class SimulationMain {
 		
 		JButton button = new JButton("Starte Simulation");
 		
+		Menu.add(button);
+		
+		menuframe.add(Menu);
+		menuframe.pack();
+		menuframe.setVisible(true);
+		
 		button.addActionListener(new java.awt.event.ActionListener() {
 			long g = Long.parseLong(g_input.getText());
 			long h = Long.parseLong(h_input.getText());
@@ -59,23 +67,16 @@ public class SimulationMain {
 			
             // Beim Drücken des Menüpunktes wird actionPerformed aufgerufen
             public void actionPerformed(java.awt.event.ActionEvent e) {
+            	menuframe.setVisible(false);
             	JPanel panel = new WindowContent(thread, g, h, s, r);
             	frame.add(panel);
-            	
+            	frame.pack();
+            	frame.setVisible(true);
         		ApplicationTime animThread = new ApplicationTime();
-        		animThread.start();
-
         		CreateFrame(animThread);
-        		
         		Timer timer = new Timer();
         		timer.scheduleAtFixedRate(new FrameUpdate(frame), 100, _UI_Constants.TPF);
             }
         });
-		Menu.add(button);
-	
-		frame.add(Menu);
-		
-		frame.setSize(_UI_Constants.Window_Width,_UI_Constants.Window_Height);
-		frame.setVisible(true);
 	}
 }
