@@ -70,10 +70,10 @@ public class WindowContent extends JPanel {
 	public void updateTeams() {
 		//System.out.println(Team_Red.size());
 		//System.out.println(Team_Blue.size());
-		for (long i = 0; i < Team_Red.size() - current_g - 1; i++ ) {
+		for (long i = 0; i < Team_Red.size() - current_g; i++ ) {
 			Team_Red.remove((int) i);
 		}
-		for(long j = 0; j < Team_Blue.size() - current_h - 1; j++ ) {	
+		for(long j = 0; j < Team_Blue.size() - current_h; j++ ) {	
 			Team_Blue.remove((int) j);
 		}
 	}
