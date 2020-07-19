@@ -24,9 +24,10 @@ public class WindowContent extends JPanel {
 	public long h;
 	public double s;
 	public double r;
+	public double l;
 	
-	public long current_g;
-	public long current_h;
+	public double current_g;
+	public double current_h;
 	
 	int dia = 10;
 	
@@ -46,6 +47,7 @@ public class WindowContent extends JPanel {
 		this.h = h_value;
 		this.s = s_value;
 		this.r = r_value;
+		this.l = Calculations.lValue(g, h, r, s);
 		
 		current_g = g;
 		current_h = h;
@@ -87,8 +89,8 @@ public class WindowContent extends JPanel {
 	@Override protected void paintComponent(Graphics graph) {
 		super.paintComponent(graph);
 		
-		current_g = (long) Calculations.gCurrent(g, h, r, s, time);
-		current_h = (long) Calculations.hCurrent(g, h, r, s, time);
+		current_g = Calculations.gCurrent(g, h, r, s, time);
+		current_h = Calculations.hCurrent(g, h, r, s, time);
 		
 		updateTeams();
 		
@@ -101,16 +103,34 @@ public class WindowContent extends JPanel {
 		for (int j = 0; j < current_h - 1; j++ ) {
 			graph.fillOval((int)(Team_Blue.get(j))[0], (int)(Team_Blue.get(j))[1], dia , dia);
 		}
-		time = t.GetTimeInSeconds() / 20;
+		time = t.GetTimeInSeconds() / 10;
+
+		System.out.println(current_g);
+		System.out.println(current_h);
 		
-		if(current_g < 1) {
-			t.stopThread();
-			SimulationMain.hWon(current_h);
-			
-		}else if(current_h < 1) {
-			t.stopThread();
-			SimulationMain.gWon(current_g);
-			
+		if(l != 0.0) {
+			if(current_g < 1) {
+				t.stopThread();
+				SimulationMain.hWon((long)current_h, Calculations.tZero(g, h, r, s));
+				
+			}else if(current_h < 1) {
+				t.stopThread();
+				SimulationMain.gWon((long)current_g, Calculations.tZero(g, h, r, s));
+				
+			}
+		}else {
+			if(g < h && current_g < 0.5) {
+				t.stopThread();
+				SimulationMain.hWon(1, Calculations.terminationValue(g, h, r, s));
+				
+			}else if(h < g && current_h < 0.5) {
+				t.stopThread();
+				SimulationMain.gWon(1, Calculations.terminationValue(g, h, r, s));
+				
+			}else if (current_g < 0.5) {
+				t.stopThread();
+				SimulationMain.draw(Calculations.terminationValue(g, h, r, s));
+			}
 		}
 	}
 }

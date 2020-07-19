@@ -1,9 +1,14 @@
 package Calculations;
 
+
 public class Calculations {
 	
+	public static double atanh(double x) {
+		return 0.5*Math.log( (x + 1.0) / (x - 1.0));
+	}
+	
 	public static double lValue(long _g, long _h, double _r, double _s)	{
-		return Math.pow((_s*_g), 2) - Math.pow((_r*_h), 2);
+		return (_s * _g * _g) - (_r * _h * _h);
 	}
 	
 	public static double zeroCrossing(long _g, long _h, double _r, double _s, double _l) {
@@ -30,6 +35,21 @@ public class Calculations {
 			return hCurrent(_g, _h, _r, _s, zeroCrossing(_g, _h, _r, _s, lValue(_g, _h, _r, _s))); 
 		}	
 	}
+	
+	public static double tZero(long _g, long _h, double _r, double _s)    {
+        if ( _g > _h)    {
+        	return atanh((Math.sqrt(_r*_s)*_g)/(_r*_h))/Math.sqrt(_r*_s);
+        }
+        return atanh((Math.sqrt(_r*_s)*_h)/(_s*_g))/Math.sqrt(_r*_s);
+    }
+		
+    
+    public static double terminationValue(long _g, long _h, double _r, double _s)    {
+        if ( _g < _h)    {
+            return Math.log(0.5 / _h)/(-Math.sqrt(_r*_s));
+        }
+        return Math.log(0.5 / _g)/(-Math.sqrt(_r*_s)); 
+    }
 	
 	
 }

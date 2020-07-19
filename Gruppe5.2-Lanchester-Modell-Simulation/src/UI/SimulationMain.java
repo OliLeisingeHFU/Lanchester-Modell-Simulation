@@ -22,20 +22,29 @@ public class SimulationMain {
 		timer.scheduleAtFixedRate(new FrameUpdate(frame), 100, _UI_Constants.TPF);
 	}
 	
-	public static void gWon(long remaining) {
+	public static void gWon(long remaining, double runtime) {
 		frame.remove(panel);
 		JPanel Solution = new JPanel();
-		JLabel g = new JLabel("Team Rot hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig");
+		JLabel g = new JLabel("Team Rot hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig. Es dauerte " + runtime + " Sekunden");
 		Solution.add(g);
 		frame.add(Solution);
 		frame.pack();
 		frame.setVisible(true);
 	}
 	
-	public static void hWon(long remaining) {
+	public static void hWon(long remaining, double runtime) {
 		frame.remove(panel);
 		JPanel Solution = new JPanel();
-		JLabel g = new JLabel("Team Blau hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig");
+		JLabel g = new JLabel("Team Blau hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig. Es dauerte " + runtime + " Sekunden");
+		Solution.add(g);
+		frame.add(Solution);
+		frame.pack();
+		frame.setVisible(true);
+	}
+	public static void draw(double runtime) {
+		frame.remove(panel);
+		JPanel Solution = new JPanel();
+		JLabel g = new JLabel("Unentschieden! die Teams besiegten sich gegenseitig nach " + runtime + " Sekunden");
 		Solution.add(g);
 		frame.add(Solution);
 		frame.pack();
