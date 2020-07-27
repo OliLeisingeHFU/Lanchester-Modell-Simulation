@@ -15,7 +15,6 @@ public class SimulationMain {
 	
 	public static void main(String[] args) {
 		ApplicationTime animThread = new ApplicationTime();
-		animThread.start();
 		CreateFrame(animThread);
 		
 		Timer timer = new Timer();
@@ -25,7 +24,7 @@ public class SimulationMain {
 	public static void gWon(long remaining, double runtime) {
 		frame.remove(panel);
 		JPanel Solution = new JPanel();
-		JLabel g = new JLabel("Team Rot hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig. Es dauerte " + runtime + " Sekunden");
+		JLabel g = new JLabel("Team Rot hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig. Es dauerte " + runtime + " Sekunden in Echtzeit");
 		Solution.add(g);
 		frame.add(Solution);
 		frame.pack();
@@ -35,7 +34,7 @@ public class SimulationMain {
 	public static void hWon(long remaining, double runtime) {
 		frame.remove(panel);
 		JPanel Solution = new JPanel();
-		JLabel g = new JLabel("Team Blau hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig. Es dauerte " + runtime + " Sekunden");
+		JLabel g = new JLabel("Team Blau hat gewonnen. Es hat noch " + remaining + " Mitglieder übrig. Es dauerte " + runtime + " Sekunden in Echtzeit");
 		Solution.add(g);
 		frame.add(Solution);
 		frame.pack();
